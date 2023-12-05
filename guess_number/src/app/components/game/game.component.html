@@ -1,0 +1,36 @@
+<div class="container">
+    <h2>Guess the Number Game</h2>
+    <label>Select Difficulty:</label>
+    <select [(ngModel)]="selectedDifficulty">
+      <option *ngFor="let level of difficultyLevels" [value]="level">{{ level }}</option>
+    </select>
+    <button (click)="startNewGame()">Start New Game</button>
+  
+    <div *ngIf="!isGameOver && !isGameWon">
+        <p>Time Remaining: {{ timeRemaining | number: '1.0-0' }} seconds</p>
+        <p>Attempts Remaining: {{ maxAttempts }}</p>
+      <p>Hints Remaining: {{ hintsRemaining }}</p>
+  
+    
+      <p *ngIf="isHintUsed && hintMessage">{{ hintMessage }}</p>
+  
+      <label>Enter your guess: </label>
+      <input type="number" [(ngModel)]="guess" />
+      <button (click)="makeGuess()" [disabled]="isGameOver || isGameWon">Submit Guess</button>
+  
+      <button (click)="useHint()" [disabled]="isGameOver || isGameWon || isHintUsed || hintsRemaining === 0">
+        Use Hint
+      </button>
+    </div>
+  
+    <div *ngIf="isGameWon" class="result-message won">
+      <h2>Congratulations! You guessed the number!</h2>
+    
+    </div>
+  
+    <div *ngIf="isGameOver && !isGameWon" class="result-message lost">
+      <h2>You have lost, Game Over!</h2>
+      
+    </div>
+  </div>
+  
